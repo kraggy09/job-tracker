@@ -23,6 +23,19 @@ const App = () => {
     });
   };
 
+  // Function to send a message to background.js when adding the current job
+  const handleAddJob = () => {
+    chrome.runtime.sendMessage({ action: "addJob" }, (response) => {
+      if (response && response.selectedDOM) {
+        console.log("Response from background.js:", response);
+        // Handle the selected DOM element in the popup, e.g., display it
+      } else if (response.error) {
+        console.error("Error:", response.error);
+        alert(response.error); // Notify the user about the error
+      }
+    });
+  };
+
   // If token is not found, render the login page
   if (!token) {
     return (
@@ -38,10 +51,16 @@ const App = () => {
     );
   }
 
-  // If token is found, render the main content (the h1 tag)
+  // If token is found, render the main content and the "Add Job" button
   return (
     <div className="min-w-[500px]">
       <h1 className="text-xl font-bold text-center">Job Tracker</h1>
+      <button
+        className="px-4 py-2 mt-4 bg-green-500 text-white rounded"
+        onClick={handleAddJob}
+      >
+        Add Current Job
+      </button>
     </div>
   );
 };
