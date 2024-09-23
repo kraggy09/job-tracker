@@ -24,11 +24,11 @@ const App = () => {
   };
 
   // Function to send a message to background.js when adding the current job
-  const handleAddJob = () => {
-    chrome.runtime.sendMessage({ action: "addJob" }, (response) => {
+  const handleAddJob = async () => {
+    chrome.runtime.sendMessage({ action: "addJob" }, async (response) => {
       if (response && response.selectedDOM) {
         console.log("Response from background.js:", response);
-        // Handle the selected DOM element in the popup, e.g., display it
+        await postData(response);
       } else if (response.error) {
         console.error("Error:", response.error);
         alert(response.error); // Notify the user about the error
@@ -36,6 +36,9 @@ const App = () => {
     });
   };
 
+  async function postData() {
+    // function to go to api and save data by managing it with gemini ai api
+  }
   // If token is not found, render the login page
   if (!token) {
     return (

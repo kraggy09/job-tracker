@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "addJob") {
     const tabId = lastActiveTabId; // Use the last active tab ID
     if (!tabId) {
-      console.error("No active tabs found.");
+      console.log("No active tabs found.");
       sendResponse({ error: "No active tabs found." });
       return;
     }
@@ -37,15 +37,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         platform = "Naukri";
       } else if (currentTabUrl.includes("indeed.com")) {
         platform = "Indeed";
+      } else if (currentTabUrl.includes("wellfound.com")) {
+        platform = "Wellfound";
       }
-
       // Send a message to contentScript.js to select the DOM element
       chrome.tabs.sendMessage(
         tabId,
         { action: "selectDOM", platform: platform },
         (response) => {
           if (chrome.runtime.lastError) {
-            console.error(
+            console.log(
               "Error sending message to content script:",
               chrome.runtime.lastError
             );
@@ -57,6 +58,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             sendResponse({
               selectedDOM: response.selectedDOM,
               platform: platform,
+              jobUrl: currentTabUrl,
+              jobDetails: response.jobDetails,
             });
           } else {
             sendResponse({ error: "No DOM selected." });
