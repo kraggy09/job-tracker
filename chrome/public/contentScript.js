@@ -85,6 +85,65 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       };
     };
 
+    function scrapeInternshala() {
+      selectedElement = document.querySelector(".internship_meta");
+      if (!selectedElement) {
+        console.log("No internship data found");
+        return;
+      }
+
+      // Scrape job title
+      let jobTitle =
+        selectedElement.querySelector(".heading_4_5.profile")?.innerText ||
+        "N/A";
+
+      // Scrape company name
+      let companyName =
+        selectedElement.querySelector(".heading_6.company_name a")?.innerText ||
+        "N/A";
+
+      // Scrape job location
+      let jobLocation =
+        selectedElement.querySelector("#location_names a")?.innerText || "N/A";
+
+      // Scrape start date
+      let startDate =
+        selectedElement.querySelector("#start-date-first")?.innerText || "N/A";
+
+      // Scrape CTC (annual salary)
+      let salaryRange =
+        selectedElement.querySelector(".salary_container .salary .desktop")
+          ?.innerText || "N/A";
+
+      // Scrape experience required
+      let experience =
+        selectedElement.querySelector(".job-experience-item .desktop-text")
+          ?.innerText || "N/A";
+
+      // Scrape application deadline
+      let applyBy =
+        selectedElement.querySelector(".item_body")?.innerText || "N/A";
+
+      // Scrape job status (e.g., Fresher Job)
+      let jobStatus =
+        selectedElement.querySelector(".status-inactive")?.innerText || "N/A";
+
+      // Organizing scraped data into an object
+      let jobDetails = {
+        jobTitle,
+        companyName,
+        jobLocation,
+        startDate,
+        salaryRange,
+        experience,
+        applyBy,
+        jobStatus,
+      };
+
+      console.log(jobDetails);
+      return jobDetails;
+    }
+
     switch (message.platform.toLowerCase()) {
       case "linkedin":
         jobDetails = scrapeLinkedIn();
@@ -97,6 +156,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         break;
       case "indeed":
         jobDetails = scrapeIndeed();
+        break;
+      case "internshala":
+        jobDetails = scrapeInternshala();
         break;
       default:
         selectedElement = document.body;

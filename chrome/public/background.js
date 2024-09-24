@@ -39,6 +39,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         platform = "Indeed";
       } else if (currentTabUrl.includes("wellfound.com")) {
         platform = "Wellfound";
+      } else if (currentTabUrl.includes("internshala.com")) {
+        platform = "Internshala";
       }
       // Send a message to contentScript.js to select the DOM element
       chrome.tabs.sendMessage(
