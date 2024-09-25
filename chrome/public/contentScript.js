@@ -70,9 +70,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       );
       return {
         jobTitle:
-          selectedElement.querySelector(
-            'h2[data-testid="jobsearch-JobInfoHeader-title"] span'
-          )?.innerText || "N/A",
+          selectedElement
+            .querySelector(
+              'h2[data-testid="jobsearch-JobInfoHeader-title"] span'
+            )
+            ?.innerText.split("- job post")[0] || "N/A",
         companyName:
           selectedElement.querySelector('div[data-company-name="true"] a')
             ?.innerText || "N/A",

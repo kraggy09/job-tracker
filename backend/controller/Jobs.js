@@ -6,9 +6,10 @@ export const createJobs = async (req, res) => {
     // Extract user ID from request and job data from request body
     const userId = req.userId;
     const { job } = req.body;
+    console.log(job);
 
     // Validating job data before proceeding
-    if (!job || !job.companyName || !job.jobRole) {
+    if (!job || !job.companyName || !job.jobTitle) {
       return res.status(400).json({
         success: false,
         msg: "Please provide all necessary job details (companyName, jobRole).",
@@ -26,11 +27,12 @@ export const createJobs = async (req, res) => {
 
     // Create the new job entry
     const newJob = await Job.create({
-      companylogo: job.companylogo || "",
+      companylogo: job.companyLogo || "",
       companyName: job.companyName,
-      jobRole: job.jobRole,
+      jobTitle: job.jobTitle,
       salaryRange: job.salaryRange || "",
       user: userId,
+      platform: job.platform,
     });
 
     if (!newJob) {
@@ -133,5 +135,3 @@ export const deleteJobById = async (req, res) => {
     });
   }
 };
-
-export default createJobs;

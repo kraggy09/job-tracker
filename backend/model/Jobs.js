@@ -13,7 +13,7 @@ const jobModel = new Schema(
     salaryRange: {
       type: String,
     },
-    jobRole: {
+    jobTitle: {
       type: String,
       required: true,
     },
@@ -29,6 +29,10 @@ const jobModel = new Schema(
       type: String,
       enum: ["Applied", "Interviewing", "Accepted", "Rejected", "No Response"],
       default: "Applied",
+    },
+    platform: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

@@ -19,10 +19,20 @@ export const register = async (req, res) => {
     email,
     password,
   });
+  if (!user) {
+    return res.status(500).json({
+      success: false,
+      msg: "Unable to sign up",
+    });
+  }
+
+  let token = await generateToken(user._id);
+
   return res.status(200).json({
     msg: "User registered successfully",
     success: true,
     user,
+    token,
   });
 };
 
@@ -55,7 +65,7 @@ export const login = async (req, res) => {
     }
 
     // Generate a token after a successful login
-    let token = await generateToken(user._id, res);
+    let token = await generateToken(user._id);
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 

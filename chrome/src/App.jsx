@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
@@ -30,10 +31,15 @@ const App = () => {
     }
 
     // If token is present, show the Home page
-    return <Home />;
+    return <Home setToken={setToken} />;
   };
 
-  return <div>{renderPage()}</div>;
+  return (
+    <div>
+      <Toaster position="top-center" reverseOrder={false} />
+      {renderPage()}
+    </div>
+  );
 };
 
 export default App;
