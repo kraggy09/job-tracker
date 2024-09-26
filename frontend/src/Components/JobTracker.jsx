@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 
 import { HiBriefcase } from "react-icons/hi2";
 import { TfiReload } from "react-icons/tfi";
+import LinkedInIcon from "../Icons/LinkedInIcon";
+import WellFoundIcon from "../Icons/WellfoundIcon";
+import IndeedIcon from "../Icons/IndeedIcon";
+import NaukriIcon from "../Icons/NaukriIcon";
+import GlassDoorIcon from "../Icons/GlassDoorIcon";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const jobStatus = [
   { name: "APPLIED", text: "text-white", bg: "bg-black" },
@@ -19,6 +25,7 @@ const initialJobs = [
     maxSalary: 500000,
     status: "APPLIED",
     dateApplied: "23/09/2024",
+    platform: "LinkedIn", // Add platform here
   },
   {
     id: 2,
@@ -28,6 +35,7 @@ const initialJobs = [
     maxSalary: 800000,
     status: "ACCEPTED",
     dateApplied: "21/09/2024",
+    platform: "Naukri", // Add platform here
   },
   {
     id: 3,
@@ -37,6 +45,7 @@ const initialJobs = [
     maxSalary: 900000,
     status: "INTERVIEWING",
     dateApplied: "10/09/2024",
+    platform: "Indeed", // Add platform here
   },
   {
     id: 4,
@@ -46,6 +55,7 @@ const initialJobs = [
     maxSalary: 700000,
     status: "REJECTED",
     dateApplied: "05/09/2024",
+    platform: "Wellfound", // Add platform here
   },
   {
     id: 5,
@@ -55,6 +65,7 @@ const initialJobs = [
     maxSalary: 600000,
     status: "APPLIED",
     dateApplied: "22/09/2024",
+    platform: "LinkedIn", // Add platform here
   },
   {
     id: 6,
@@ -64,6 +75,7 @@ const initialJobs = [
     maxSalary: 1100000,
     status: "INTERVIEWING",
     dateApplied: "17/09/2024",
+    platform: "Naukri", // Add platform here
   },
   {
     id: 7,
@@ -73,6 +85,7 @@ const initialJobs = [
     maxSalary: 1200000,
     status: "ACCEPTED",
     dateApplied: "15/09/2024",
+    platform: "Indeed", // Add platform here
   },
   {
     id: 8,
@@ -82,6 +95,7 @@ const initialJobs = [
     maxSalary: 400000,
     status: "REJECTED",
     dateApplied: "12/09/2024",
+    platform: "Wellfound", // Add platform here
   },
   {
     id: 9,
@@ -91,6 +105,7 @@ const initialJobs = [
     maxSalary: 750000,
     status: "INTERVIEWING",
     dateApplied: "18/09/2024",
+    platform: "LinkedIn", // Add platform here
   },
   {
     id: 10,
@@ -100,51 +115,7 @@ const initialJobs = [
     maxSalary: 550000,
     status: "APPLIED",
     dateApplied: "24/09/2024",
-  },
-  {
-    id: 11,
-    position: "Cloud Engineer",
-    company: "Wipro",
-    location: "Hyderabad",
-    maxSalary: 950000,
-    status: "ACCEPTED",
-    dateApplied: "13/09/2024",
-  },
-  {
-    id: 12,
-    position: "Mobile App Developer",
-    company: "Zomato",
-    location: "Pune",
-    maxSalary: 650000,
-    status: "REJECTED",
-    dateApplied: "20/09/2024",
-  },
-  {
-    id: 13,
-    position: "Data Engineer",
-    company: "Uber",
-    location: "Delhi",
-    maxSalary: 1000000,
-    status: "INTERVIEWING",
-    dateApplied: "16/09/2024",
-  },
-  {
-    id: 14,
-    position: "QA Engineer",
-    company: "Oracle",
-    location: "Kolkata",
-    maxSalary: 480000,
-    status: "APPLIED",
-    dateApplied: "19/09/2024",
-  },
-  {
-    id: 15,
-    position: "Security Analyst",
-    company: "Cisco",
-    location: "Bangalore",
-    maxSalary: 780000,
-    status: "INTERVIEWING",
-    dateApplied: "14/09/2024",
+    platform: "Glassdoor", // Add platform here
   },
 ];
 
@@ -152,22 +123,26 @@ function JobTracker() {
   const [jobs, setJobs] = useState(initialJobs);
   const [filter, setFilter] = useState("ALL");
   const [filteredJobs, setFilteredJobs] = useState(initialJobs);
+  const [editedJob, setEditedJob] = useState(-1);
 
   // Update filteredJobs state whenever filter or jobs state changes
   useEffect(() => {
     if (filter === "ALL") {
-      setFilteredJobs(jobs);
+      setFilteredJobs(initialJobs);
     } else {
-      setFilteredJobs(jobs.filter((job) => job.status === filter));
+      setFilteredJobs(
+        jobs.filter((job) => job.status.toLowerCase() === filter.toLowerCase())
+      );
     }
   }, [filter, jobs]);
+  useEffect(() => {}, []);
 
   return (
-    <div className="p-5 h-screen bg-gray-100">
-      <h1 className="lg:text-4xl flex items-center justify-center gap-x-2 text-2xl mb-4 font-semibold">
+    <div className="p-5 bg-gray-100">
+      <h1 className="lg:text-4xl flex items-center justify-center gap-x-2 text-2xl mbx-4 py-3 font-semibold">
         <HiBriefcase /> CareerScout
       </h1>
-      <div className="mb-4 flex justify-between flex-col gap-y-4 text-sm lg:text-lg  md:flex-row">
+      <div className="mbx-4  flex justify-between flex-col gap-yx-4 py-3 text-sm lg:text-lg  md:flex-row">
         <div className="flex min-w-[80vw]  border-b-2 items-center">
           <button
             className={`md:px-6 px-2 py-1 rounded-t-2xl ${
@@ -189,82 +164,132 @@ function JobTracker() {
             </button>
           ))}
         </div>
-        <button className="bg-black text-white flex items-center justify-center gap-x-2 px-4 py-1 rounded-lg text-xl  md:rounded-xl">
+        <button className="bg-black text-white flex items-center justify-center gap-x-2 px-4  py-1 rounded-lg text-xl  md:rounded-xl">
           <TfiReload className="hover:animate-spin" /> Refresh
         </button>
       </div>
-      <div className="overflow-auto text-sm rounded-lg shadow-lg">
-        <table className="w-full leading-normal">
+      <div className="overflow-auto min-h-[80vh] text-sm rounded-lg shadow-lg">
+        <table className="w-full   leading-normal">
           <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
-              <th className="w-20 p-4  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className="w-20 px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
                 No.
               </th>
-              <th className="p-4  font-semibold text-center text-gray-600 uppercase tracking-wider">
+
+              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Position
               </th>
-              <th className="p-4  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Company
               </th>
-              <th className="p-4  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Salary
               </th>
-              <th className="p-4  font-semibold text-center text-gray-600 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="p-4   font-semibold text-center text-gray-600 uppercase">
+              <th className="px-4 py-3   font-semibold text-center text-gray-600 uppercase">
                 Date Applied
               </th>
-              <th className="p-4 font-semibold text-center text-gray-600 uppercase tracking-wider">
-                Actions
+
+              <th className="md:max-w-16  px-4 py-3  font-semibold text-left text-gray-600 uppercase tracking-wider">
+                Platform
+              </th>
+              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+                Status
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredJobs.map((job) => (
-              <tr
-                key={job.id}
-                className="hover:bg-gray-100 transition duration-150 ease-in-out"
-              >
-                <td className="p-4 text-sm  text-gray-800 text-center ">
-                  <a
-                    href="#"
-                    className="font-bold text-blue-500 hover:underline"
-                  >
-                    {job.id}
-                  </a>
-                </td>
-                <td className="p-4 text-sm max-w-40 text-gray-800 text-center ">
-                  {job.position}
-                </td>
-                <td className="p-4 text-sm text-gray-800 text-center ">
-                  {job.company}
-                </td>
-                <td className="p-4 text-sm text-gray-800 text-center ">
-                  {job.maxSalary}
-                </td>
-                <td
-                  className={`p-4 text-sm text-center ${
-                    job.status.toLowerCase() === "interviewing"
-                      ? "bg-yellow-300 text-yellow-800"
-                      : job.status.toLowerCase() === "applied"
-                      ? "bg-green-300 text-green-700"
-                      : job.status.toLowerCase() === "accepted"
-                      ? "bg-green-400 text-green-900"
-                      : job.status.toLowerCase() === "rejected" &&
-                        "bg-red-300 text-red-900"
-                  }`}
+            {filteredJobs === null ? (
+              <>Loading....</>
+            ) : (
+              filteredJobs.map((job) => (
+                <tr
+                  key={job.id}
+                  className="hover:bg-gray-100 transition duration-150 ease-in-out"
                 >
-                  {job.status}
-                </td>
-                <td className="p-4 text-sm text-gray-800 text-center ">
-                  {job.dateApplied}
-                </td>
-                <td className="p-4 text-sm text-gray-800 text-center">
-                  Something
-                </td>
-              </tr>
-            ))}
+                  <td className="px-4 py-3 text-sm  text-gray-800 text-center ">
+                    <a
+                      href="#"
+                      className="font-bold text-blue-500 hover:underline"
+                    >
+                      {job.id}
+                    </a>
+                  </td>
+
+                  <td className="px-4 py-3 text-sm max-w-40 text-gray-800 text-center ">
+                    {job.position}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                    {job.company}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                    {job.maxSalary}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                    {job.dateApplied}
+                  </td>
+
+                  <td className="px-4 flex items-center justify-start py-3 text-sm text-gray-800 text-center ">
+                    {job.platform.toLowerCase() === "naukri" ? (
+                      <NaukriIcon />
+                    ) : job.platform.toLowerCase() === "indeed" ? (
+                      <IndeedIcon />
+                    ) : job.platform.toLowerCase() === "wellfound" ? (
+                      <WellFoundIcon />
+                    ) : job.platform.toLowerCase() === "linkedin" ? (
+                      <LinkedInIcon />
+                    ) : (
+                      <GlassDoorIcon />
+                    )}
+                  </td>
+                  <td
+                    onClick={() => {
+                      if (editedJob === job.id) {
+                        setEditedJob(-1);
+                      } else {
+                        setEditedJob(job.id);
+                      }
+                    }}
+                    className={`px-4 hover:cursor-pointer relative  py-3 text-sm max-w-40 text-center ${
+                      job.status.toLowerCase() === "interviewing"
+                        ? "bg-yellow-300 text-yellow-800"
+                        : job.status.toLowerCase() === "applied"
+                        ? "bg-gray-300 text-black"
+                        : job.status.toLowerCase() === "accepted"
+                        ? "bg-green-400 text-green-900"
+                        : job.status.toLowerCase() === "rejected" &&
+                          "bg-red-300 text-red-900"
+                    }`}
+                  >
+                    <div className="md:grid flex items-center justify-center md:grid-cols-8">
+                      <p className="col-span-7">{job.status}</p>
+                      <MdOutlineKeyboardArrowDown color="black" size={30} />
+                    </div>
+                    {job.id === editedJob && (
+                      <div className="absolute flex py-2 text-black bg-white  z-20 min-w-full left-0  justify-center flex-col  top-12 rounded-lg">
+                        {jobStatus
+                          .filter(
+                            (j) =>
+                              j.name.toLowerCase() != job.status.toLowerCase()
+                          )
+                          .map((j) => {
+                            return (
+                              <div
+                                onClick={() => {
+                                  console.log(j.name);
+                                }}
+                                key={j.name}
+                                className={` hover:bg-gray-300 font-semibold py-3 hover::${j.text}`}
+                              >
+                                {j.name}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

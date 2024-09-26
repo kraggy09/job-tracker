@@ -64,6 +64,57 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       };
     };
 
+    // Function to extract job details
+    function scrapeGlassDoor() {
+      // Get the company name
+      selectedElement = document.querySelector(
+        ".JobDetails_jobDetailsContainer__y9P3L"
+      );
+      const companyName =
+        selectedElement.querySelector(
+          ".EmployerProfile_employerNameContainer__tb7JV h4"
+        )?.innerText || "N/A";
+
+      // Get the job title
+      const jobTitle =
+        selectedElement.querySelector(".heading_Level1__soLZs")?.innerText ||
+        "N/A";
+
+      // Get the location
+      const jobLocation =
+        selectedElement.querySelector(".JobDetails_location__mSg5h")
+          ?.innerText || "N/A";
+
+      // Get the company rating
+      const companyRating =
+        selectedElement.querySelector(
+          ".EmployerProfile_ratingContainer__ul0Ef span"
+        )?.innerText || "N/A";
+
+      // Get the logo image URL
+      const logoUrl =
+        selectedElement.querySelector(".EmployerLogo_logoContainer__o39lB img")
+          ?.src || "N/A";
+
+      const salaryRange =
+        selectedElement
+          .querySelector(".SalaryEstimate_salaryRange__brHFy")
+          ?.innerText.split("(Employer")[0] || "N/A";
+
+      // Create an object to hold the extracted job details
+      const jobDetails = {
+        companyName: companyName,
+        jobTitle: jobTitle,
+        location: jobLocation,
+        companyRating: companyRating,
+        logoUrl: logoUrl,
+        salaryRange: salaryRange,
+      };
+
+      console.log(jobDetails);
+      return jobDetails;
+    }
+
     const scrapeIndeed = () => {
       selectedElement = document.querySelector(
         ".jobsearch-HeaderContainer.css-n78gek.eu4oa1w0"
@@ -161,6 +212,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         break;
       case "internshala":
         jobDetails = scrapeInternshala();
+        break;
+      case "glassdoor":
+        jobDetails = scrapeGlassDoor();
         break;
       default:
         selectedElement = document.body;
