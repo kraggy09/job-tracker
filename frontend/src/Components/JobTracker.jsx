@@ -8,6 +8,8 @@ import IndeedIcon from "../Icons/IndeedIcon";
 import NaukriIcon from "../Icons/NaukriIcon";
 import GlassDoorIcon from "../Icons/GlassDoorIcon";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const jobStatus = [
   { name: "APPLIED", text: "text-white", bg: "bg-black" },
@@ -124,6 +126,7 @@ function JobTracker() {
   const [filter, setFilter] = useState("ALL");
   const [filteredJobs, setFilteredJobs] = useState(initialJobs);
   const [editedJob, setEditedJob] = useState(-1);
+  const navigate = useNavigate();
 
   // Update filteredJobs state whenever filter or jobs state changes
   useEffect(() => {
@@ -135,7 +138,15 @@ function JobTracker() {
       );
     }
   }, [filter, jobs]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("token", token);
+
+    if (!token) {
+      toast.success("Please relogin");
+      navigate("/signup");
+    }
+  }, []);
 
   return (
     <div className="p-5 bg-gray-100">

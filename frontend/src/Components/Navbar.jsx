@@ -1,11 +1,11 @@
 const Navbar = () => {
   return (
-    <nav className="min-w-full min-h-[15vh]  shadow-lg bg-white">
+    <nav className="sticky top-0  text-white flex items-center justify-between px-6  shadow-lg bg-black">
       <h1>CareerScout</h1>
-      <ul>
-        <li>Login</li>
-        <li>Signup</li>
-        <li>Dashboard</li>
+      <ul className="flex items-center gap-x-9   py-3 justify-center">
+        <li className="min-h-full">Login</li>
+        <li className="min-h-full">Signup</li>
+        <li className="min-h-full">Dashboard</li>
       </ul>
     </nav>
   );
