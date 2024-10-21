@@ -1,8 +1,8 @@
-const GlassDoorIcon = () => (
+const GlassDoorIcon = ({ w, h }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="150"
-    height="30"
+    width={w ? w : "150"}
+    height={h ? h : "30"}
     fill="none"
     role="img"
   >

@@ -1,8 +1,8 @@
-const IndeedIcon = () => {
+const IndeedIcon = ({ h }) => {
   return (
     <svg
       width="75"
-      height="20"
+      height={h ? h : "20"}
       viewBox="0 0 75 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

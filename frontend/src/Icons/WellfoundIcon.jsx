@@ -1,9 +1,9 @@
-const WellFoundIcon = () => {
+const WellFoundIcon = ({ w }) => {
   return (
     <svg
       fill="currentColor"
       viewBox="0 0 554.89997 266.70002"
-      width="30"
+      width={w ? w : "30"}
       className="  text-black"
       xmlns="http://www.w3.org/2000/svg"
     >
