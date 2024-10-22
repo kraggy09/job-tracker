@@ -1,11 +1,14 @@
 import http from "http";
+
+import multer from "multer";
 import app from "./backend/app.js";
 
-// Create an HTTP server instance
 const server = http.createServer(app);
 
-// Set the server timeout (e.g., 5 minutes)
-server.setTimeout(300000); // 5 minutes in milliseconds
+server.setTimeout(300000);
+
+// Multer setup for handling file uploads
+const upload = multer();
 
 // Define your routes
 app.get("/hello", (req, res) => {
@@ -24,5 +27,5 @@ app.get("/", (req, res) => {
 
 // Start the server
 server.listen(8000, () => {
-  console.log("App is running at 8000");
+  console.log("App is running at http://localhost:8000");
 });

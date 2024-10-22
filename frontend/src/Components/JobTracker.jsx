@@ -144,15 +144,12 @@ function JobTracker() {
 
     if (!token) {
       toast.success("Please relogin");
-      navigate("/signup");
+      // navigate("/signup");
     }
   }, []);
 
   return (
-    <div className="p-5 bg-gray-100">
-      <h1 className="lg:text-4xl flex items-center justify-center gap-x-2 text-2xl mbx-4 py-3 font-semibold">
-        <HiBriefcase /> CareerScout
-      </h1>
+    <div className=" min-w-full ">
       <div className="mbx-4  flex justify-between flex-col gap-yx-4 py-3 text-sm lg:text-lg  md:flex-row">
         <div className="flex min-w-[80vw]  border-b-2 items-center">
           <button
@@ -183,27 +180,27 @@ function JobTracker() {
         <table className="w-full   leading-normal">
           <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
-              <th className="w-20 px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className="w-20  font-semibold text-center text-gray-600 uppercase tracking-wider">
                 No.
               </th>
 
-              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className=" font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Position
               </th>
-              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className=" font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Company
               </th>
-              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className=" font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Salary
               </th>
-              <th className="px-4 py-3   font-semibold text-center text-gray-600 uppercase">
+              <th className="  font-semibold text-center text-gray-600 uppercase">
                 Date Applied
               </th>
 
-              <th className="md:max-w-16  px-4 py-3  font-semibold text-left text-gray-600 uppercase tracking-wider">
+              <th className="md:max-w-16   font-semibold text-left text-gray-600 uppercase tracking-wider">
                 Platform
               </th>
-              <th className="px-4 py-3  font-semibold text-center text-gray-600 uppercase tracking-wider">
+              <th className=" font-semibold text-center text-gray-600 uppercase tracking-wider">
                 Status
               </th>
             </tr>
@@ -217,7 +214,7 @@ function JobTracker() {
                   key={job.id}
                   className="hover:bg-gray-100 transition duration-150 ease-in-out"
                 >
-                  <td className="px-4 py-3 text-sm  text-gray-800 text-center ">
+                  <td className="text-sm  text-gray-800 text-center ">
                     <a
                       href="#"
                       className="font-bold text-blue-500 hover:underline"
@@ -226,16 +223,16 @@ function JobTracker() {
                     </a>
                   </td>
 
-                  <td className="px-4 py-3 text-sm max-w-40 text-gray-800 text-center ">
+                  <td className="text-sm max-w-40 text-gray-800 text-center ">
                     {job.position}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                  <td className="text-sm text-gray-800 text-center ">
                     {job.company}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                  <td className="text-sm text-gray-800 text-center ">
                     {job.maxSalary}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800 text-center ">
+                  <td className="text-sm text-gray-800 text-center ">
                     {job.dateApplied}
                   </td>
 
