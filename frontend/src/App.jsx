@@ -16,7 +16,7 @@ function App() {
     <div className=" min-h-[100%] h-[100%]   flex md:items-center md:justify-center  flex-col">
       {!hideNavbar && <Navbar />}
 
-      <div className="min-h-[70px]"></div>
+      <div></div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Homepage />} />
