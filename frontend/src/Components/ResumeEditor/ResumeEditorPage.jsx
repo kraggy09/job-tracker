@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Header from "./Header.jsx";
+import MainPanel from "./MainPanel.jsx";
 
 const ResumeEditorPage = () => {
   return (
-    <div>ResumeEditorPage</div>
-  )
-}
+    <div>
+      <Header />
+      <MainPanel />
+    </div>
+  );
+};
 
-export default ResumeEditorPage
+export default ResumeEditorPage;

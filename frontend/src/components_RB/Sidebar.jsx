@@ -33,25 +33,25 @@ const Sidebar = () => {
       {/* Main Navigation */}
       <div className="flex flex-col gap-4 w-full">
         <SidebarItem
-          to="/"
+          to="/dashboard"
           icon={<IoMdHome className="w-7 h-7" />}
           label="Home"
           isOpen={isOpen}
-          isActive={location.pathname === "/"}
+          isActive={location.pathname === "/dashboard"}
         />
         <SidebarItem
-          to="/job-tracker"
+          to="/dashboard/job-tracker"
           icon={<FaSuitcaseRolling className="w-7 h-7" />}
           label="Job Tracker"
           isOpen={isOpen}
-          isActive={location.pathname === "/job-tracker"}
+          isActive={location.pathname === "/dashboard/job-tracker"}
         />
         <SidebarItem
-          to="/statistics"
+          to="/dashboard/statistics"
           icon={<FaChartBar className="w-7 h-7" />}
           label="Statistics"
           isOpen={isOpen}
-          isActive={location.pathname === "/statistics"}
+          isActive={location.pathname === "/dashboard/statistics"}
         />
       </div>
 
@@ -61,19 +61,19 @@ const Sidebar = () => {
       {/* Tools */}
       <div className="flex flex-col gap-4 w-full">
         <SidebarItem
-          to="/resume-builder"
+          to="/dashboard/resume-builder"
           icon={<TbFileCv className="w-7 h-7" />}
           label="Resume Builder"
           isOpen={isOpen}
           badge="New"
-          isActive={location.pathname === "/resume-builder"}
+          isActive={location.pathname === "/dashboard/resume-builder"}
         />
         <SidebarItem
-          to="/score-resume"
+          to="/dashboard/score-resume"
           icon={<LuChartPie className="w-7 h-7" />}
           label="Score my Resume"
           isOpen={isOpen}
-          isActive={location.pathname === "/score-resume"}
+          isActive={location.pathname === "/dashboard/score-resume"}
         />
       </div>
 
