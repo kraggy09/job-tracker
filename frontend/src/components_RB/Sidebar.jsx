@@ -1,0 +1,110 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FaChartBar } from "react-icons/fa";
+import { IoMdHome } from "react-icons/io";
+import { IoReorderThree } from "react-icons/io5";
+import { FaSuitcaseRolling } from "react-icons/fa6";
+import { TbFileCv } from "react-icons/tb";
+import { LuChartPie } from "react-icons/lu";
+
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const toggleSidebar = () => setIsOpen(!isOpen);
+  const location = useLocation();
+
+  return (
+    <div
+      className={`${
+        isOpen ? "w-64 items-start px-4" : "w-16 items-center"
+      } bg-gray-100 border-r flex flex-col py-4 transition-all duration-300 h-screen`}
+    >
+      {/* Top: Logo + Toggle Button */}
+      <div className="flex items-center justify-between w-full px-2 mb-6">
+        {isOpen && (
+          <h1 className="text-xl font-bold text-black whitespace-nowrap">
+            JobGenie
+          </h1>
+        )}
+        <button onClick={toggleSidebar} className="text-gray-600">
+          <IoReorderThree className="w-7 h-7" />
+        </button>
+      </div>
+
+      {/* Main Navigation */}
+      <div className="flex flex-col gap-4 w-full">
+        <SidebarItem
+          to="/"
+          icon={<IoMdHome className="w-7 h-7" />}
+          label="Home"
+          isOpen={isOpen}
+          isActive={location.pathname === "/"}
+        />
+        <SidebarItem
+          to="/job-tracker"
+          icon={<FaSuitcaseRolling className="w-7 h-7" />}
+          label="Job Tracker"
+          isOpen={isOpen}
+          isActive={location.pathname === "/job-tracker"}
+        />
+        <SidebarItem
+          to="/statistics"
+          icon={<FaChartBar className="w-7 h-7" />}
+          label="Statistics"
+          isOpen={isOpen}
+          isActive={location.pathname === "/statistics"}
+        />
+      </div>
+
+      {/* Separator */}
+      <div className="my-4 w-full border-t border-gray-300" />
+
+      {/* Tools */}
+      <div className="flex flex-col gap-4 w-full">
+        <SidebarItem
+          to="/resume-builder"
+          icon={<TbFileCv className="w-7 h-7" />}
+          label="Resume Builder"
+          isOpen={isOpen}
+          badge="New"
+          isActive={location.pathname === "/resume-builder"}
+        />
+        <SidebarItem
+          to="/score-resume"
+          icon={<LuChartPie className="w-7 h-7" />}
+          label="Score my Resume"
+          isOpen={isOpen}
+          isActive={location.pathname === "/score-resume"}
+        />
+      </div>
+
+      {/* Spacer to push everything upward and remove white bottom */}
+      <div className="flex-grow" />
+    </div>
+  );
+};
+
+const SidebarItem = ({ to, icon, label, isOpen, isActive, badge }) => {
+  return (
+    <Link to={to} className="w-full">
+      <div
+        className={`flex items-center gap-4 cursor-pointer text-gray-700 hover:text-black ${
+          isOpen ? "justify-start pl-1" : "justify-center"
+        } ${isActive ? "bg-black/10 rounded-md p-2 text-black" : ""}`}
+      >
+        <div>{icon}</div>
+        {isOpen && (
+          <div className="flex items-center gap-2">
+            <span className="text-base">{label}</span>
+            {badge && (
+              <span className="text-xs bg-green-500 text-white px-2 rounded-full">
+                {badge}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </Link>
+  );
+};
+
+export default Sidebar;
