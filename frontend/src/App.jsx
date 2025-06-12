@@ -15,6 +15,7 @@ const App = () => {
     <Router>
       <div className="flex">
         <Sidebar />
+
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Landing />} />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { FaChartBar } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { IoReorderThree } from "react-icons/io5";
@@ -8,10 +8,15 @@ import { TbFileCv } from "react-icons/tb";
 import { LuChartPie } from "react-icons/lu";
 
 const Sidebar = () => {
+  const params = useParams();
+
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const location = useLocation();
 
+  if (window.location.pathname === "/") {
+    return null; // Hide sidebar on the landing page
+  }
   return (
     <div
       className={`${
