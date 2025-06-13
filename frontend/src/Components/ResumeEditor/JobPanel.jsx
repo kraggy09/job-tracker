@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import JobsList from './JobsList';
 import JobData from './JobData';
 import { FaSearch, FaChevronDown } from 'react-icons/fa';
@@ -8,6 +8,8 @@ const JobPanel = () => {
   const [matchScore, setMatchScore] = useState(null);
   const [isMatched, setIsMatched] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownStyle, setDropdownStyle] = useState({});
+  const selectRef = useRef(null);
 
   const handleJobSelect = (job) => {
     setSelectedJob(job);
@@ -26,14 +28,19 @@ const JobPanel = () => {
     }
   };
 
-  return (
-    <div className="flex mt-20 h-[calc(100vh-80px)] bg-gray-100">
-      {/* Left Sidebar (Placeholder) */}
-      <div className="w-64 bg-gray-200 p-4 flex-shrink-0">
-        <h2 className="text-lg font-bold mb-4">Sidebar</h2>
-        <p className="text-gray-600">This is a placeholder for the sidebar.</p>
-      </div>
+  useEffect(() => {
+    if (isDropdownOpen && selectRef.current) {
+      const rect = selectRef.current.getBoundingClientRect();
+      setDropdownStyle({
+        top: `${rect.bottom + window.scrollY + 8}px`, // 0.5rem gap (8px)
+        left: `${rect.left + window.scrollX}px`,
+        width: `${rect.width}px`,
+      });
+    }
+  }, [isDropdownOpen]);
 
+  return (
+    <div className="flex h-[calc(100vh)] bg-gray-50">
       {/* Job Panel (Middle Column) */}
       <div className="w-[600px] flex flex-col p-6 overflow-y-auto">
         {/* Header */}
@@ -50,8 +57,9 @@ const JobPanel = () => {
 
         {/* Search/Select Job Section */}
         <div className="mb-6">
-          <div className="relative">
+          <div>
             <div
+              ref={selectRef}
               className="flex items-center p-3 bg-white border border-gray-300 rounded-lg cursor-pointer"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
@@ -62,7 +70,10 @@ const JobPanel = () => {
               <FaChevronDown className="text-gray-500" />
             </div>
             {isDropdownOpen && (
-              <div className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              <div
+                className="fixed bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10"
+                style={dropdownStyle}
+              >
                 {JobsList.map(job => (
                   <div
                     key={job.id}
@@ -94,7 +105,7 @@ const JobPanel = () => {
       </div>
 
       {/* Resume Preview (Right Column) */}
-       {/* <div className="flex-1 bg-gray-200 p-4">
+      {/* <div className="flex-1 bg-gray-200 p-4">
         <h2 className="text-lg font-bold mb-4">Resume Preview</h2>
         <p className="text-gray-600">This is a placeholder for the resume preview.</p>
       </div> */}

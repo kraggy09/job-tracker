@@ -1,6 +1,6 @@
-
-import React, { useState, useContext } from 'react';
-import { ResumeContext } from "../../ResumeContext"; 
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { ResumeContext } from '../../ResumeContext';
 import { IoChevronBack } from 'react-icons/io5';
 import { FaUser, FaGraduationCap, FaBriefcase, FaFolderOpen, FaCertificate } from 'react-icons/fa';
 import { BsLightningFill } from 'react-icons/bs';
@@ -9,19 +9,24 @@ import { Save, X } from 'lucide-react';
 
 const Header = () => {
   const { formData, setFormData } = useContext(ResumeContext);
+  const { resumeName } = useParams(); // Get resumeName from URL
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedResume, setSelectedResume] = useState('Aakash_Shaw_Resume.pdf');
+  const [selectedResume, setSelectedResume] = useState(resumeName || 'Aakash_Shaw_Resume.pdf');
   const [activeSection, setActiveSection] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [dropdownLeft, setDropdownLeft] = useState(0);
+  const buttonRef = useRef(null);
 
   const sections = [
     'personalDetails', 'education', 'professionalSummary', 'experience',
     'projects', 'certifications', 'skills', 'achievements'
   ];
 
-  const savedResumes = [
-    'Aakash_Shaw_Resume.pdf', 'AakashShaw_Resume_LinkedIn.pdf',
-    'AakashShaw_Frontend.pdf', 'AakashShaw_Backend.pdf'
+  const savedResumes = [,
+    'Aakash_Shaw_Resume.pdf',
+    'AakashShaw_Resume_LinkedIn.pdf',
+    'AakashShaw_Frontend.pdf',
+    'AakashShaw_Backend.pdf'
   ];
 
   const sectionButtons = [
@@ -40,6 +45,7 @@ const Header = () => {
   const handleResumeSelect = (resume) => {
     setSelectedResume(resume);
     setShowDropdown(false);
+    window.history.pushState(null, '', `/editor/${resume}`); // Update URL without reloading
   };
 
   const handleSectionClick = (section, index) => {
@@ -52,15 +58,14 @@ const Header = () => {
     setCurrentStep(0);
   };
 
-const nextStep = () => {
-  if (currentStep < sections.length - 1) {
-    setCurrentStep(currentStep + 1);
-    setActiveSection(sections[currentStep + 1]);
-  } else {
-    closeModal();
-  }
-};
-
+  const nextStep = () => {
+    if (currentStep < sections.length - 1) {
+      setCurrentStep(currentStep + 1);
+      setActiveSection(sections[currentStep + 1]);
+    } else {
+      closeModal();
+    }
+  };
 
   const prevStep = () => {
     if (currentStep > 0) {
@@ -144,8 +149,8 @@ const nextStep = () => {
   const removeExperienceAchievement = (expIndex, achievementIndex) => {
     const newExperience = [...formData.experience];
     if (expIndex >= 0 && expIndex < newExperience.length &&
-        newExperience[expIndex].achievements && newExperience[expIndex].achievements.length > 1 &&
-        achievementIndex >= 0 && achievementIndex < newExperience[expIndex].achievements.length) {
+      newExperience[expIndex].achievements && newExperience[expIndex].achievements.length > 1 &&
+      achievementIndex >= 0 && achievementIndex < newExperience[expIndex].achievements.length) {
       newExperience[expIndex].achievements.splice(achievementIndex, 1);
       setFormData({ ...formData, experience: newExperience });
     }
@@ -210,8 +215,8 @@ const nextStep = () => {
   const removeProjectAchievement = (projIndex, achievementIndex) => {
     const newProjects = [...formData.projects];
     if (projIndex >= 0 && projIndex < newProjects.length &&
-        newProjects[projIndex].achievements && newProjects[projIndex].achievements.length > 1 &&
-        achievementIndex >= 0 && achievementIndex < newProjects[projIndex].achievements.length) {
+      newProjects[projIndex].achievements && newProjects[projIndex].achievements.length > 1 &&
+      achievementIndex >= 0 && achievementIndex < newProjects[projIndex].achievements.length) {
       newProjects[projIndex].achievements.splice(achievementIndex, 1);
       setFormData({ ...formData, projects: newProjects });
     }
@@ -892,17 +897,41 @@ const nextStep = () => {
     }
   };
 
+  useEffect(() => {
+    if (buttonRef.current && showDropdown) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownLeft(rect.left);
+    }
+  }, [showDropdown]);
+
+  // Update selectedResume when resumeName from URL changes
+  useEffect(() => {
+    if (resumeName && resumeName !== selectedResume) {
+      setSelectedResume(resumeName);
+    }
+  }, [resumeName]);
+
   return (
-    <div className="relative">
-      <header className="fixed top-0 left-0 right-0 z-10 bg-white border-b border-gray-200 shadow-sm pl-64 pr-4 py-2">
+    <div className="bg-gray-50 w-full max-w-full flex flex-col overflow-hidden">
+      <div className="px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 relative">
-            <button onClick={toggleDropdown} className="text-gray-600 hover:text-gray-900 transition-colors">
-              <IoChevronBack size={18} className={`transition-transform duration-200 ${showDropdown ? '-rotate-90' : ''}`} />
+          <div className="flex items-center gap-3">
+            <button
+              ref={buttonRef}
+              onClick={toggleDropdown}
+              className="text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <IoChevronBack
+                size={18}
+                className={`transition-transform duration-200 ${showDropdown ? 'rotate-90' : ''}`}
+              />
             </button>
             <span className="text-lg font-semibold text-gray-800">{selectedResume}</span>
             {showDropdown && (
-              <div className="absolute top-8 left-0 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+              <div
+                className="fixed top-10 w-64 bg-white border border-gray-200 rounded-b-md shadow-lg z-50"
+                style={{ left: `${dropdownLeft}px` }}
+              >
                 <ul className="max-h-48 overflow-y-auto text-sm text-gray-700">
                   {savedResumes.map((resume, index) => (
                     <li
@@ -913,7 +942,9 @@ const nextStep = () => {
                       {resume}
                     </li>
                   ))}
-                  <li className="px-4 py-2 text-blue-600 hover:bg-gray-100 cursor-pointer font-medium">See more...</li>
+                  <li className="px-4 py-2 text-blue-600 hover:bg-gray-100 cursor-pointer font-medium">
+                    See more...
+                  </li>
                 </ul>
               </div>
             )}
@@ -932,16 +963,14 @@ const nextStep = () => {
             ))}
           </div>
         </div>
-      </header>
+      </div>
+
       {activeSection && (
-        <div className="absolute top-20 left-64 right-4 z-20 flex justify-center">
-          <div className="bg-white bg-opacity-95 rounded-lg shadow-xl p-6 max-w-2xl w-full max-h-[70vh] overflow-y-auto border border-gray-200">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
-                {sections[currentStep].replace(/([A-Z])/g, ' $1').trim()}
-              </h2>
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-60">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-4xl max-h-[70vh] overflow-y-auto border border-gray-200">
+            <div className="flex justify-end items-center mb-4">
               <button onClick={closeModal} className="text-gray-600 hover:text-gray-900">
-                <X className="h-6 w-6" />
+                <X size={24} />
               </button>
             </div>
             {renderForm()}
@@ -949,19 +978,19 @@ const nextStep = () => {
               <button
                 onClick={prevStep}
                 disabled={currentStep === 0}
-                className={`px-4 py-2 rounded-md text-sm font-medium ${currentStep === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                className={`px-4 py-2 rounded-md text-sm font-medium ${currentStep === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-black text-white hover:bg-gray-800'}`}
               >
                 Previous
               </button>
               <button
                 onClick={saveProgress}
-                className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 flex items-center"
+                className="px-4 py-2 rounded-md text-sm font-medium text-white bg-black hover:bg-gray-800 flex items-center"
               >
                 <Save className="mr-1 h-4 w-4" /> Save
               </button>
               <button
                 onClick={nextStep}
-                className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                className="px-4 py-2 rounded-md text-sm font-medium text-white bg-black hover:bg-gray-800"
               >
                 {currentStep === sections.length - 1 ? 'Finish' : 'Next'}
               </button>

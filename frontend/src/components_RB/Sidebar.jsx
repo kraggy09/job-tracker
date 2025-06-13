@@ -1,27 +1,32 @@
 import { useState } from "react";
+import { useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { FaChartBar } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { IoReorderThree } from "react-icons/io5";
 import { FaSuitcaseRolling } from "react-icons/fa6";
 import { TbFileCv } from "react-icons/tb";
-import { LuChartPie } from "react-icons/lu";
+import { LuChartPie } from "react-icons/lu";  
+import { SidebarContext } from "./SidebarContext";
 
 const Sidebar = () => {
-  const params = useParams();
-
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleSidebar = () => setIsOpen(!isOpen);
+ const { isOpen, toggleSidebar } = useContext(SidebarContext);
   const location = useLocation();
 
   if (window.location.pathname === "/") {
     return null; // Hide sidebar on the landing page
   }
+  if (window.location.pathname === "/auth/login") {
+    return null; // Hide sidebar on the landing page
+  }
+  if (window.location.pathname === "/auth/signup") {
+    return null; // Hide sidebar on the landing page
+  }
   return (
     <div
-      className={`${
+      className={`fixed top-0 left-0 ${
         isOpen ? "w-64 items-start px-4" : "w-16 items-center"
-      } bg-gray-100 border-r flex flex-col py-4 transition-all duration-300 h-screen`}
+      } bg-gray-100 border-r flex flex-col py-4 transition-all duration-300 h-screen z-10`}
     >
       {/* Top: Logo + Toggle Button */}
       <div className="flex items-center justify-between w-full px-2 mb-6">
