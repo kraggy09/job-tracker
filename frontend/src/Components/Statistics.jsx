@@ -1,46 +1,47 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
+import CommonHeader from "../components_RB/CommonHeader";
 
 // Header component with consistent design
-const Header = () => {
-  return (
-    <div className="flex justify-between items-center mb-6">
-      <div className="flex items-center">
-        <button className="mr-4 p-2 hover:bg-gray-100 rounded-full">
-          <ArrowLeft size={20} className="text-gray-600" />
-        </button>
-        <h1 className="text-xl font-semibold">Job Hunt </h1>
-      </div>
-      <div className="flex items-center space-x-4">
-        <button className="relative p-3 rounded-full bg-white shadow-md hover:bg-gray-100 transition duration-200 ease-in-out">
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 17h5l-1.405-1.405M19 13V9a7 7 0 10-14 0v4l-1.405 1.405A1 1 0 005 17h5m4 0h2"
-            />
-          </svg>
-          {/* Optional Notification Count Badge */}
-          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 rounded-full shadow">
-            3
-          </span>
-        </button>
+// const Header = () => {
+//   return (
+//     <div className="flex justify-between items-center mb-6">
+//       <div className="flex items-center">
+//         <button className="mr-4 p-2 hover:bg-gray-100 rounded-full">
+//           <ArrowLeft size={20} className="text-gray-600" />
+//         </button>
+//         <h1 className="text-xl font-semibold">Job Hunt </h1>
+//       </div>
+//       <div className="flex items-center space-x-4">
+//         <button className="relative p-3 rounded-full bg-white shadow-md hover:bg-gray-100 transition duration-200 ease-in-out">
+//           <svg
+//             className="w-6 h-6 text-gray-700"
+//             fill="none"
+//             stroke="currentColor"
+//             strokeWidth="2"
+//             viewBox="0 0 24 24"
+//           >
+//             <path
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               d="M15 17h5l-1.405-1.405M19 13V9a7 7 0 10-14 0v4l-1.405 1.405A1 1 0 005 17h5m4 0h2"
+//             />
+//           </svg>
+//           {/* Optional Notification Count Badge */}
+//           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 rounded-full shadow">
+//             3
+//           </span>
+//         </button>
 
-        <img
-          src="https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png"
-          className="w-10 h-10 rounded-full border border-gray-200 shadow-sm hover:shadow-md transition duration-200 ease-in-out"
-          alt="User Avatar"
-        />
-      </div>
-    </div>
-  );
-};
+//         <img
+//           src="https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png"
+//           className="w-10 h-10 rounded-full border border-gray-200 shadow-sm hover:shadow-md transition duration-200 ease-in-out"
+//           alt="User Avatar"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
 
 export default function StatisticsPage() {
   const statusData = [
@@ -68,9 +69,9 @@ export default function StatisticsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Updated Header with consistent design */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <Header />
-      </div>
+      <div className=" px-6 py-4">
+        <CommonHeader title="STATISTICS" />
+      
 
       <div className="p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -198,6 +199,7 @@ export default function StatisticsPage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

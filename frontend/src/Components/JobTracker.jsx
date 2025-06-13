@@ -6,6 +6,7 @@ import StatusCards from "../components_JobTracker/StatusCards";
 import JobsTable from "../components_JobTracker/JobsTable";
 import AddJobModal from "../components_JobTracker/AddJobModal";
 import ShareModal from "../components_JobTracker/ShareModal";
+import CommonHeader from "../components_RB/CommonHeader";
 
 const JobTracker = () => {
   const [jobs, setJobs] = useState(initialJobs);
@@ -87,9 +88,10 @@ const JobTracker = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex overflow-hidden">
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* CHANGE: Pass setShowShareModal to Filters to enable ShareModal trigger */}
+ <div className="h-screen bg-gray-100 w-full max-w-full flex flex-col overflow-hidden"> {/* CHANGE: Ensured full width and height */}
+    <div className="px-6 py-8">
+      <CommonHeader title="JOB TRACKER" />
+      <div className="flex-1 min-h-0 flex flex-col overflow-y-auto"> {/* CHANGE: Removed px-6 py-8 to eliminate gap, ensured full stretch */}
         <Filters
           filterText={filterText}
           setFilterText={setFilterText}
@@ -126,6 +128,8 @@ const JobTracker = () => {
         />
       </div>
     </div>
+    </div>
+
   );
 };
 

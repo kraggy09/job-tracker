@@ -2,22 +2,28 @@ import React, { useState } from "react";
 
 const rows = [
   {
-    name: "ZunaibKhan_Resume_pdf_BrowserStack",
+    name: "Aakash_Shaw_Resume.pdf",
     score: 78.4,
-    created: "about 2 hours ago",
+    created: " 2 hours ago",
     updated: "about 2 hours ago",
   },
   {
-    name: "ZunaibKhan_Resume_pdf",
+    name: "AakashShaw_Resume_LinkedIn.pdf",
     score: 85.4,
     created: "2 days ago",
     updated: "about 2 hours ago",
   },
   {
-    name: "ZunaibKhan_Sales_pdf",
+    name: "AakashShaw_Frontend.pdf",
     score: 55.4,
     created: "2 days ago",
-    updated: "about 2 hours ago",
+    updated: "about 4 hours ago",
+  },
+  {
+    name: "AakashShaw_Backend.pdf",
+    score: 80,
+    created: "7 days ago",
+    updated: "about 5 hours ago",
   },
 ];
 
