@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { FaChartBar } from "react-icons/fa";
+import { FaChartBar, FaLaptopCode } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { IoReorderThree } from "react-icons/io5";
 import { FaSuitcaseRolling } from "react-icons/fa6";
@@ -84,6 +84,13 @@ const Sidebar = () => {
           label="Score my Resume"
           isOpen={isOpen}
           isActive={location.pathname === "/dashboard/score-resume"}
+        />
+        <SidebarItem
+          to="http://ai-intervue.vercel.app"
+          icon={<FaLaptopCode  className="w-7 h-7" />}
+          label="Mock Interview"
+          isOpen={isOpen}
+          isActive={location.pathname === "http://ai-intervue.vercel.app"}
         />
       </div>
 

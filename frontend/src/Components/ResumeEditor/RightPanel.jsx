@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ResumeContext } from "../../ResumeContext"; 
 import { Download, Upload } from 'lucide-react';
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 
 const RightPanel = () => {
   const { formData } = useContext(ResumeContext);

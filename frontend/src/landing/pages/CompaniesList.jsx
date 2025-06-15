@@ -69,21 +69,21 @@ import { useRef, useEffect } from "react";
 
 const CompaniesList = () => {
   const logos = [
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
-    "./images/comapanies/googleLogo.png",
+    "./images/comapanies/google.png",
+    "./images/comapanies/facebook.png",
+    "./images/comapanies/amazon.png",
+    "./images/comapanies/netflix.png",
+    "./images/comapanies/microsoft.png",
+    "./images/comapanies/apple.png",
+    "./images/comapanies/spotify.png",
+    "./images/comapanies/adobe.png",
+    "./images/comapanies/uber.png",
+    "./images/comapanies/slack.png",
+    "./images/comapanies/twitter.png",
+    "./images/comapanies/airbnb.png",
+    "./images/comapanies/github.png",
+    "./images/comapanies/shopify.png",
+    "./images/comapanies/zoom.png",
   ];
 
   const containerRef = useRef(null);
